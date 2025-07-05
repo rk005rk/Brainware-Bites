@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brainware Bites</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f3f4f6;
+    }
+
+    header {
+      background-color: #0d6efd;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    nav {
+      background-color: #003366;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #ffc107;
+    }
+
+    main {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-title {
+      font-size: 1.8em;
+      color: #0d6efd;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .card img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin: 15px 0;
+    }
+
+    .testimonial-section {
+      text-align: center;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      margin-top: 40px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .testimonial-section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      color: #007bff;
+    }
+
+    .testimonial-box {
+      font-size: 1.1rem;
+      animation: fadeIn 1s ease-in-out;
+      color: #333;
+    }
+
+    .stars {
+      font-size: 1.5rem;
+      color: gold;
+      margin-top: 8px;
+    }
+
+    footer {
+      text-align: center;
+      background-color: #003366;
+      color: white;
+      padding: 15px 0;
+      margin-top: 50px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Brainware Bites</h1>
+    <p>Canteen Management System for Brainware University</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="menu.html">Menu</a>
+    <a href="order.html">My Orders</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html">About Us</a>
+  </nav>
+
+  <main>
+    <!-- Special Dish Section -->
+    <section class="card">
+      <h2 class="card-title">Today's Special</h2>
+      <img src="/images/Mughlai Chicken Biryani Recipe.jpg" alt="Special Dish">
+      <p class="card-description">Enjoy our special dish for today, a delicious combination of flavors to satisfy your taste buds!</p>
+    </section>
+
+  <!-- Menu Highlights -->
+<section class="card">
+  <h2 class="card-title">Menu Highlights</h2>
+  <div class="highlight-gallery">
+    <img src="/images/Chicken Sandwich.jpg" alt="Sandwich" class="fade-img" style="animation-delay: 0s;">
+    <img src="/images/paneer.jpg" alt="Vegetarian Dish" class="fade-img" style="animation-delay: 0.3s;">
+    <img src="/images/Chilli Chicken.jpg" alt="Non-Vegetarian Dish" class="fade-img" style="animation-delay: 0.6s;">
+    <img src="/images/kosa.webp" alt="Non-Vegetarian Dish" class="fade-img" style="animation-delay: 0.9s;">
+    <img src="/images/Coffee.jpg" alt="Coffee" class="fade-img" style="animation-delay: 1.2s;">
+    <img src="/images/Chicken Chowmein.jpg" alt="Chowmein" class="fade-img" style="animation-delay: 1.5s;">
+  </div>
+</section>
+
+
+
+    <!-- Student Testimonials -->
+    <section class="testimonial-section">
+      <h2><i class="fas fa-user-graduate"></i> What Our Students Say</h2>
+      <div class="testimonial-box" id="testimonialBox">
+        <p id="testimonialText">"The food at Brainware Bites is always fresh and tasty. Highly recommend!" –</p>
+        <div class="stars" id="stars">⭐⭐⭐⭐⭐</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Brainware Bites | All Rights Reserved</p>
+  </footer>
+
+  <script>
+    const testimonials = [
+      {
+        text: '"The food at Brainware Bites is always fresh and tasty. Highly recommend!" –',
+        stars: '⭐⭐⭐⭐⭐'
+      },
+      {
+        text: '"Great variety, affordable, and quick service. Love it!" –',
+        stars: '⭐⭐⭐⭐⭐'
+      },
+      {
+        text: '"Paneer Butter Masala is my favorite. Must try!" –',
+        stars: '⭐⭐⭐⭐⭐'
+      },
+      {
+        text: '"Egg roll is amazing and staff is friendly!" –',
+        stars: '⭐⭐⭐⭐'
+      }
+    ];
+
+    let current = 0;
+    const testimonialText = document.getElementById("testimonialText");
+    const stars = document.getElementById("stars");
+
+    function showNextTestimonial() {
+      testimonialText.textContent = testimonials[current].text;
+      stars.textContent = testimonials[current].stars;
+      current = (current + 1) % testimonials.length;
+    }
+
+    setInterval(showNextTestimonial, 4000);
+  </script>
+
+</body>
+</html>

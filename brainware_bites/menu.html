@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Choose Menu - Brainware Bites</title>
+  <link rel="stylesheet" href="styles.css" />
+  
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f3f4f6;
+    }
+
+    header {
+      background-color: #0d6efd;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    nav {
+      background-color: #003366;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    </style>
+</head>
+<body>
+
+  <header>
+    <h1>Brainware Bites</h1>
+    <p>Canteen Management System for Brainware University</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="menu.html">Menu</a>
+    <a href="order.html">My Orders</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html">About Us</a>
+  </nav>
+
+
+  <main>
+    <section class="card">
+      <h2 class="card-title">Choose Your Preference</h2>
+      <div class="food-options">
+        <div class="food-card">
+          <img src="images/veg.webp" alt="Veg Meals">
+          <h3>Vegetarian</h3>
+          <p>Fresh and healthy plant-based meals.</p>
+          <a href="veg.html" class="btn">View Veg Menu</a>
+        </div>
+
+        <div class="food-card">
+          <img src="images/nonveg.webp" alt="Non-Veg Meals">
+          <h3>Non-Vegetarian</h3>
+          <p>Delicious protein-rich meat dishes.</p>
+          <a href="nonveg.html" class="btn">View Non-Veg Menu</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Brainware Bites | All Rights Reserved</p>
+  </footer>
+
+</body>
+</html>
+

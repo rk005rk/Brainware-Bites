@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Canteen Menu</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/forms"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fff0f5, #fef6e4, #ffe5ec);
+    }
+
+    .cart-icon {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #FF5722;
+      padding: 14px 20px;
+      border-radius: 50%;
+      color: white;
+      font-size: 26px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .cart-icon:hover {
+      transform: scale(1.1);
+    }
+
+    .cart-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .cart-content {
+      background-color: #fff;
+      padding: 24px;
+      border-radius: 16px;
+      max-width: 420px;
+      width: 90%;
+      overflow-y: auto;
+      animation: slideIn 0.4s ease;
+    }
+
+    .cart-items {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .menu-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: linear-gradient(135deg, #fffefc, #ffe7d6);
+    }
+
+    .menu-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary {
+      background-color: #FF5722;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #e64a19;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background-color: #5a6268;
+    }
+
+    input[type="number"] {
+      width: 70px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container mx-auto my-10 px-4">
+    <h1 class="text-4xl font-bold text-center text-gray-900 mb-10 animate-pulse">🍽️ Canteen Menu</h1>
+
+    <!-- Search Bar -->
+    <div class="relative mb-10 max-w-xl mx-auto">
+      <input type="text" id="searchInput" placeholder="Search food items..." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400" oninput="filterMenu()">
+      <button class="absolute top-0 right-0 px-6 py-3 bg-orange-500 text-white rounded-r-lg hover:bg-orange-600">Search</button>
+    </div>
+
+    <!-- Menu Grid -->
+    <div id="menu" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </div>
+
+  <!-- Cart Floating Icon -->
+  <div class="cart-icon" id="cartIcon">
+    🛒 <span id="cartCount">0</span>
+  </div>
+
+  <!-- Cart Modal -->
+  <div class="cart-modal" id="cartModal">
+    <div class="cart-content">
+      <h2 class="text-2xl font-semibold mb-2">Your Cart</h2>
+      <div class="cart-items" id="cartItems"></div>
+      <div class="flex justify-between font-semibold text-xl mt-4">
+        <span>Total: ₹<span id="totalPrice">0</span></span>
+      </div>
+      <button class="btn-primary mt-4 px-6 py-2 rounded" onclick="showPayment()">Buy Now</button>
+
+<div id="paymentSection" style="display: none;" class="mt-4 text-center">
+  <h3 class="text-lg font-semibold mb-2">Pay via UPI or QR Code</h3>
+  <p class="text-sm mb-2"><strong>UPI ID:</strong> brainwarebites@upi</p>
+  <img src="qr.jpg" alt="QR Code" class="mx-auto border p-2 rounded">
+  <p class="text-sm mt-2">Scan this QR code with your UPI app to complete payment.</p>
+</div>
+
+      <button class="btn-secondary mt-2 px-6 py-2 rounded w-full" id="closeCartBtn">Close</button>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    const menuItems = [
+      { id: 1, name: "Veg Biryani", price: 60, image: "/images/veg biriyani.jpg" },
+      { id: 2, name: "Aloo Paratha", price: 40, image: "/images/Aloo Paratha.jpg" },
+      { id: 3, name: "Samosa", price: 10, image: "/images/Sweet Potato Mini Samosas.jpg" },
+      { id: 4, name: "Veg Momos", price: 50, image: "/images/veg momo.jpg" },
+      { id: 5, name: "Lassi", price: 20, image: "/images/Sweet Lassi Recipe (Indian Yogurt Drink).jpg" },
+      { id: 6, name: "Mango Lassi", price: 45, image: "/images/Indian Mango Lassi Mocktail_ Exotic Drink for Any Occasion.jpg" },
+      { id: 7, name: "Paneer Butter Masala", price: 50, image: "/images/paneer.jpg" },
+      { id: 8, name: "Tandoori Roti", price: 50, image: "/images/Tandoori Roti stock image_ Image of fried, bowl, dinner - 24052225.jpg" },
+      { id: 9, name: "Dal Rice", price: 50, image: "/images/Dal rice.jpg" },
+      { id: 10, name: "Dal Makhani", price: 50, image: "/images/Dal Makhani Recipe.jpg" },
+      { id: 11, name: "Aloo Gobi", price: 50, image: "/images/Aloo Gobi - Instant Pot & Stovetop.jpg" },
+      { id: 12, name: "Idli", price: 50, image: "/images/Idli Sambar.jpg" },
+    ];
+
+    let cart = [];
+
+    function renderMenu(items = menuItems) {
+      const menu = document.getElementById('menu');
+      menu.innerHTML = '';
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = "menu-card rounded-xl shadow-md p-4";
+        card.innerHTML = `
+          <div class="flex justify-center mb-3">
+            <img src="${item.image}" alt="${item.name}" class="w-32 h-32 object-cover rounded-full border-4 border-white shadow-md">
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800 text-center">${item.name}</h3>
+          <p class="text-gray-600 mb-2 text-center">₹${item.price}</p>
+          <div class="flex items-center gap-2 mb-3 justify-center">
+            <label class="text-sm text-gray-700" for="qty-${item.id}">Qty:</label>
+            <input type="number" id="qty-${item.id}" min="1" value="1" class="px-2 py-1 border border-gray-300 rounded w-20 focus:outline-none focus:ring-2 focus:ring-orange-300">
+          </div>
+          <button class="btn-primary w-full py-2 rounded font-medium" onclick="addToCart(${item.id})">➕ Add to Cart</button>
+        `;
+        menu.appendChild(card);
+      });
+    }
+
+    function filterMenu() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = menuItems.filter(item => item.name.toLowerCase().includes(query));
+      renderMenu(filtered);
+    }
+
+    function addToCart(id) {
+      const qtyInput = document.getElementById(`qty-${id}`);
+      const quantity = parseInt(qtyInput.value);
+      if (quantity < 1 || isNaN(quantity)) return alert("Please enter a valid quantity.");
+
+      const item = menuItems.find(i => i.id === id);
+      cart.push({ ...item, quantity });
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartItemsDiv = document.getElementById('cartItems');
+      const cartCount = document.getElementById('cartCount');
+      const totalPrice = document.getElementById('totalPrice');
+
+      cartItemsDiv.innerHTML = '';
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        const div = document.createElement('div');
+        div.className = "flex justify-between items-center mb-2 text-gray-800";
+        div.innerHTML = `
+          <span>${item.name} (x${item.quantity}) - ₹${itemTotal}</span>
+          <button class="text-red-500 text-sm hover:underline" onclick="removeFromCart(${index})">Remove</button>
+        `;
+        cartItemsDiv.appendChild(div);
+      });
+
+      cartCount.textContent = cart.reduce((acc, item) => acc + item.quantity, 0);
+      totalPrice.textContent = total;
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    document.getElementById('cartIcon').addEventListener('click', () => {
+      document.getElementById('cartModal').style.display = 'flex';
+    });
+
+    document.getElementById('closeCartBtn').addEventListener('click', () => {
+      document.getElementById('cartModal').style.display = 'none';
+    });
+
+    renderMenu();
+    function showPayment() {
+  document.getElementById('paymentSection').style.display = 'block';
+}
+
+  </script>
+</body>
+</html>
